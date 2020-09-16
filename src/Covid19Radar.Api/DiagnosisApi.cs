@@ -55,12 +55,13 @@ namespace Covid19Radar.Api
             Logger.LogInformation($"{nameof(RunAsync)} request body {requestBody}");
 
             // Check Valid Route
+            /*
             IValidationServerService.ValidateResult validateResult = ValidationServerService.Validate(req);
             if (!validateResult.IsValid)
             {
                 return validateResult.ErrorActionResult;
             }
-
+            */
             var diagnosis = JsonConvert.DeserializeObject<DiagnosisSubmissionParameter>(requestBody);
             var reqTime = DateTimeOffset.UtcNow;
 
@@ -96,11 +97,13 @@ namespace Covid19Radar.Api
             }
 
             // validatetion VerificationPayload
+            /*
             var verificationResult = await VerificationService.VerificationAsync(diagnosis.VerificationPayload);
             if (verificationResult != 200)
             {
                 return new ObjectResult("Bad VerificationPayload") { StatusCode = verificationResult };
             }
+            */
 
             var timestamp = DateTimeOffset.UtcNow;
             var keys = diagnosis.Keys.Select(_ => _.ToModel(diagnosis, (ulong)timestamp.ToUnixTimeSeconds())).ToArray();
